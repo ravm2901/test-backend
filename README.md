@@ -36,3 +36,10 @@ Ouput example:
 | 2019 |  01   |   1         | $1100 |
 | 2019 |  02   |   1         | $1900 |
 | 2019 |  03   |   1         | $900  |
+
+
+### What are the differences between? ###
+
+```throw new Error('something bad happened');```
+
+```callback(new Error('something bad happened'));```
