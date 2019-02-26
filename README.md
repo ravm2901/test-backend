@@ -1,6 +1,6 @@
 # README #
 
-### How do I get set up? ###
+### How do I set up? ###
 
 * Create DB
 * Set database configuration in .env
