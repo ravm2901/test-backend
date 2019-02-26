@@ -9,7 +9,7 @@
 ### Create user endpoint ###
 
 * User endpoint for add, update and delete user. (Changed should be reflected in the DB)
-* In each endpoint must validate typo of data. (ex: validate email, if is not valid return code error with error description).
+* In each endpoint must validate data type. (ex: validate email, if is not valid return code error with error description).
 * Implement jwt Auth. For login the user should call to /login and use his name and email as credentials.
 * Only users logged in should be able to edit his data.
 
