@@ -3,17 +3,17 @@
 ### How do I get set up? ###
 
 * Create DB
-* Database configuration in .env
+* Set database configuration in .env
 * Run localhost:3000/sync (script to create table with one user)
 
 ### Create user endpoint ###
 
-* User endpoint for add, update and delete user. (Changed should be reflected in the DB)
-* In each endpoint must validate data type. (ex: validate email, if is not valid return code error with error description).
-* Implement jwt Auth. For login the user should call to /login and use his name and email as credentials.
-* Only users logged in should be able to edit his data.
+* Create user endpoint for add, update and delete user. (Changed should be reflected in the DB)
+* Each endpoint must validate data type. (ex: validate email. If is not valid, return code error with error description).
+* Implement jwt Auth. For login, the user should call to /login and use his name and email as credentials.
+* Only users logged in should be able to edit their data.
 
-### Create query to get sales by year and month from this table ###
+### Create a query to get sales by year and month from this table ###
 
 | id  | provider_id | client_id  | price | created             |
 | --- |:-----------:| ----------:| -----:| -------------------:|
