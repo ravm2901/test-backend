@@ -6,14 +6,16 @@
 * Set database configuration in .env
 * Run localhost:3000/sync (script to create table with one user)
 
-### Create user endpoint ###
+### NOTE: Fork this project and send me your repo link ###
+
+1) ### Create user endpoint ###
 
 * Create user endpoint for add, update and delete user. (Changed should be reflected in the DB)
 * Each endpoint must validate data type. (ex: validate email. If is not valid, return code error with error description).
 * Implement jwt Auth. For login, the user should call to /login and use his name and email as credentials.
 * Only users logged in should be able to edit their data.
 
-### Create a query to get sales by year and month from this table ###
+2) ### Create a query to get sales by year and month from this table ###
 
 | id  | provider_id | client_id  | price | created             |
 | --- |:-----------:| ----------:| -----:| -------------------:|
@@ -38,7 +40,7 @@ Ouput example:
 | 2019 |  03   |   1         | $900  |
 
 
-### What are the differences between? ###
+3) ### What are the differences between? ###
 
 ```throw new Error('something bad happened');```
 
