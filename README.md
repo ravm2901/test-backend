@@ -6,7 +6,7 @@
 * Set database configuration in .env
 * Run localhost:3000/sync (script to create table with one user)
 
-### NOTE: Fork this project and send me your repo link ###
+### NOTE: Fork this project and send me your github link ###
 
 1) ### Create user endpoint ###
 
