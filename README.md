@@ -11,14 +11,14 @@
 1) ### Create user endpoint ###
 
 * Create user endpoint for add, update and delete user. (Changed should be reflected in the DB)
-  -- add is a public, no require Authentication
-  -- Update, delete and get require Authentication
+  * add is a public, no require Authentication
+  * Update, delete and get require Authentication
 * Each endpoint must validate data type. (ex: validate email. If is not valid, return code error with error description).
-  -- Ready
+  * Ready
 * Implement jwt Auth. For login, the user should call to /login and use his name and email as credentials.
-  -- /login method require sent data by POST
+  * /login method require sent data by POST
 * Only users logged in should be able to edit their data.
-  -- Ready
+  * Ready
 
 2) ### Create a query to get sales by year and month from this table ###
 
@@ -45,32 +45,32 @@ Ouput example:
 | 2019 |  03   |   1         | $900  |
 
 Query:
-
+```sql
 SELECT
   year(created) as year,
   month(created) as month,
   count(*) as reservation,
   sum(price) as total
-FROM `sales` group by year(created), month(created)
-
+FROM sales group by year(created), month(created)
+```
 
 Query with format in months and total:
-
+```sql
 SELECT
 	year(created) as year,
   LPAD(month(created), 2, '0') as month,
   count(*) as reservation,
   CONCAT('$',CAST(sum(price) AS CHAR)) as total
-FROM `sales`
+FROM sales
 group by year(created), month(created)
-
+```
 
 
 
 3) ### What are the differences between? ###
 
 ```throw new Error('something bad happened');```
-  Here the error becomes an exception (and it is throw). Synchronous way. 
+  Here the error becomes an exception (and it is throw). Synchronous way.
 
 ```callback(new Error('something bad happened'));```
   Here the error is created without throwing it. The callback function is responsible for executing the error. This is the more common way to use in Node.js because most error are asynchronous
