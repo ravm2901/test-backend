@@ -16,10 +16,8 @@ const app = new Koa();
 
 // Custom 401 handling
 app.use(function(ctx, next){
-
-  console.log(ctx.request);
-
   return next().catch((err) => {
+
     if (401 == err.status) {
       ctx.status = 401;
       ctx.body = 'Protected resource, use Authorization header to get access\n';

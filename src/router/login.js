@@ -36,8 +36,7 @@ async function login(ctx, next){
     if (ctx.request.body.name == user.name) {
       ctx.body = {
         token: jsonwebtoken.sign({
-          data: user,
-          exp: Math.floor(Date.now() / 1000) - (60 * 60) // 60 seconds * 60 minutes = 1 hour
+          data: user
         }, config.secret)
       }
       next();

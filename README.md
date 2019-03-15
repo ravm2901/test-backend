@@ -10,14 +10,14 @@
 1) ### Create user endpoint ###
 
 * Create user endpoint for add, update and delete user. (Changed should be reflected in the DB)
-  * Add: public, no require Authentication. Use POST method
-  * Update: private, requires Authentication. Use PUT method
-  * Delete: private, requires Authentication. Use DELETE method
-  * Get: private, requires Authentication. Use GET method
+  * Add: public, no require Authentication. Use POST method. (localhost:3000/public/user/add)
+  * Update: private, requires Authentication. Use PUT method. (localhost:3000/api/user/:id)
+  * Delete: private, requires Authentication. Use DELETE method. (localhost:3000/api/user/:id)
+  * Get: private, requires Authentication. Use GET method. (localhost:3000/api/user/:id)
 * Each endpoint must validate data type. (ex: validate email. If is not valid, return code error with error description).
   * Ready
 * Implement jwt Auth. For login, the user should call to /login and use his name and email as credentials.
-  * /login method requires sent data by POST
+  * /login method requires sent data by POST. (localhost:3000/login)
 * Only users logged in should be able to edit their data.
   * Ready
 

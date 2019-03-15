@@ -127,7 +127,6 @@ async function addUser(ctx){
                         setCTX(ctx, 200, user);
         })
         .catch((err) => {
-            console.log(err);
             setCTX(ctx, 409, err);
         });
 
@@ -152,7 +151,6 @@ async function updateUser(ctx, next){
   if(ctx.state.user.data.id == ctx.params.id){
     const User = ctx.orm().user;
 
-    //console.log(ctx.state.user.data);
 
     let {valid, messages} = validateData(ctx.request.body, 0);
 
@@ -191,7 +189,7 @@ async function updateUser(ctx, next){
     }
   }
   else{
-    setCTX(ctx, 401, 'Invalid token, please log in again.');
+    setCTX(ctx, 401, 'Invalid token, please login again.');
   }
 }
 
@@ -223,7 +221,7 @@ async function deleteUser(ctx){
     })
   }
   else{
-    setCTX(ctx, 401, 'Invalid token, please log in again.');
+    setCTX(ctx, 401, 'Invalid token, please login again.');
   }
 }
 
@@ -263,7 +261,7 @@ async function getUser(ctx){
     });
   }
   else{
-    setCTX(ctx, 401, 'Invalid token, please log in again.');
+    setCTX(ctx, 401, 'Invalid token, please login again.');
   }
 }
 
