@@ -58,7 +58,7 @@ FROM sales group by year(created), month(created)
 Query with format in months and total:
 ```sql
 SELECT
-	year(created) as year,
+  year(created) as year,
   LPAD(month(created), 2, '0') as month,
   count(*) as reservation,
   CONCAT('$',CAST(sum(price) AS CHAR)) as total
