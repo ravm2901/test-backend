@@ -5,18 +5,19 @@
 * Create DB
 * Set database configuration in .env
 * Run localhost:3000/sync (script to create table with one user)
-
-### NOTE: Fork this project and send me your github link ###
+* Any question, please sent me an email to vilchis40@gmail.com
 
 1) ### Create user endpoint ###
 
 * Create user endpoint for add, update and delete user. (Changed should be reflected in the DB)
-  * add is a public, no require Authentication
-  * Update, delete and get require Authentication
+  * Add: public, no require Authentication. Use POST method
+  * Update: private, requires Authentication. Use PUT method
+  * Delete: private, requires Authentication. Use DELETE method
+  * Get: private, requires Authentication. Use GET method
 * Each endpoint must validate data type. (ex: validate email. If is not valid, return code error with error description).
   * Ready
 * Implement jwt Auth. For login, the user should call to /login and use his name and email as credentials.
-  * /login method require sent data by POST
+  * /login method requires sent data by POST
 * Only users logged in should be able to edit their data.
   * Ready
 
