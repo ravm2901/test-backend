@@ -100,44 +100,49 @@ router.delete('/api/user/:id', deleteUser);
 
 //Add user
 async function addUser(ctx){
-  const User = ctx.orm().user;
 
 
-  let {valid, messages} = validateData(ctx.request.body, 1);
+  try{
+
+    const User = ctx.orm().user;
 
 
-  if(valid){
-
-    let result = await User.findOne({
-        where: {
-            email: ctx.request.body.email
-        }
-    })
-    .then(user => {
-        return !user;
-    });
+    let {valid, messages} = validateData(ctx.request.body, 1);
 
 
+    if(valid){
 
-    if(result){
-        ctx.request.body.birthday += ' 00:00:00';
+      let user = await User.findOne({
+          where: {
+              email: ctx.request.body.email
+          }
+      });
 
-        await User.create(ctx.request.body)
-                    .then((user) => {
-                        setCTX(ctx, 200, user);
-        })
-        .catch((err) => {
-            setCTX(ctx, 409, err);
-        });
+
+
+      if(!user){
+          ctx.request.body.birthday += ' 00:00:00';
+
+          let newUser = await User.create(ctx.request.body);
+
+          if(newUser){
+            setCTX(ctx, 200, user);
+          }
+          else{
+            setCTX(ctx, 409, "Error creating user");
+          }
+      }
+      else{
+        setCTX(ctx, 409, 'email must be unique');
+      }
 
     }
     else{
-      setCTX(ctx, 409, 'email must be unique');
+      setCTX(ctx, 409, messages);
     }
-
   }
-  else{
-    setCTX(ctx, 409, messages);
+  catch(err){
+    setCTX(ctx, 409, err);
   }
 
 };
@@ -148,48 +153,52 @@ async function addUser(ctx){
 //update user
 async function updateUser(ctx, next){
 
-  if(ctx.state.user.data.id == ctx.params.id){
-    const User = ctx.orm().user;
+
+  try{
+
+    if(ctx.state.user.data.id == ctx.params.id){
+      const User = ctx.orm().user;
 
 
-    let {valid, messages} = validateData(ctx.request.body, 0);
+      let {valid, messages} = validateData(ctx.request.body, 0);
 
 
-    if(valid){
+      if(valid){
 
-      if(ctx.request.body.birthday){
-        ctx.request.body.birthday += ' 00:00:00';
-      }
+        if(ctx.request.body.birthday){
+          ctx.request.body.birthday += ' 00:00:00';
+        }
 
-      await User.update(
+
+        const user = await User.update(
           ctx.request.body, {
           where:{ id:ctx.params.id }
-        })
-        .then((user) => {
-          if(user){
-            setCTX(ctx, 204, '');
-          }
-          else{
-            setCTX(ctx, 404, 'User not found');
-          }
-        })
-        .catch((err) => {
-
-            if(typeof err.errors[0] === 'string'){
-              setCTX(ctx, 409, err.errors[0].message);
-            }
-            else{
-              setCTX(ctx, 409, 'Unknown error');
-            }
         });
 
+
+        if(user){
+          setCTX(ctx, 204, '');
+        }
+        else{
+          setCTX(ctx, 404, 'User not found');
+        }
+
+      }
+      else{
+        setCTX(ctx, 409, messages);
+      }
     }
     else{
-      setCTX(ctx, 409, messages);
+      setCTX(ctx, 401, 'Invalid token, please login again.');
     }
   }
-  else{
-    setCTX(ctx, 401, 'Invalid token, please login again.');
+  catch(err){
+    if(typeof err.errors[0] === 'string'){
+      setCTX(ctx, 409, err.errors[0].message);
+    }
+    else{
+      setCTX(ctx, 409, 'Unknown error');
+    }
   }
 }
 
@@ -199,15 +208,19 @@ async function updateUser(ctx, next){
 //delete user
 async function deleteUser(ctx){
 
-  if(ctx.state.user.data.id == ctx.params.id){
-    const User = ctx.orm().user;
+  try{
 
-    await User.destroy({
-      where: {
-          id: ctx.params.id
-      }
-    })
-    .then(user => {
+    if(ctx.state.user.data.id == ctx.params.id){
+
+      const User = ctx.orm().user;
+
+      const user = await User.destroy({
+        where: {
+            id: ctx.params.id
+        }
+      });
+
+
       if(user){
         ctx.status = 204;
       }
@@ -218,10 +231,14 @@ async function deleteUser(ctx){
           name: 'User not found'
         }
       }
-    })
+
+    }
+    else{
+      setCTX(ctx, 401, 'Invalid token, please login again.');
+    }
   }
-  else{
-    setCTX(ctx, 401, 'Invalid token, please login again.');
+  catch(err){
+    setCTX(ctx, 501, 'Unknow error');
   }
 }
 
@@ -231,15 +248,19 @@ async function deleteUser(ctx){
 //get user
 async function getUser(ctx){
 
-  if(ctx.state.user.data.id == ctx.params.id){
-    const User = ctx.orm().user;
+    try{
 
-    await User.findOne({
-        where: {
-            id: ctx.params.id
-        }
-    })
-    .then(user => {
+      if(ctx.state.user.data.id == ctx.params.id){
+
+        const User = ctx.orm().user;
+
+        const user = await User.findOne({
+            where: {
+                id: ctx.params.id
+            }
+        });
+
+
         if(user){
           ctx.status = 200;
           ctx.body = user;
@@ -251,18 +272,21 @@ async function getUser(ctx){
             name: 'User not found'
           }
         }
-    })
-    .catch(err => {
+      }
+      else{
+        setCTX(ctx, 401, 'Invalid token, please login again.');
+      }
+
+    }
+    catch(err){
+      console.log(err);
       ctx.status = 404;
       ctx.body = {
         id: ctx.params.id,
         name: 'User not found'
       }
-    });
-  }
-  else{
-    setCTX(ctx, 401, 'Invalid token, please login again.');
-  }
+    };
+
 }
 
 

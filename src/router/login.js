@@ -16,24 +16,25 @@ router.post('/login', login);
 //Login
 async function login(ctx, next){
 
-  const User = ctx.orm().user;
 
-  await User.findOne({
-      where: {
-          email: ctx.request.body.email
-      }
-  })
-  .then(user => {
+  try{
+    const User = ctx.orm().user;
+
+    const user = await User.findOne({
+        where: {
+            email: ctx.request.body.email
+        }
+    });
+
+
+
     if (!user) {
       ctx.status = 401;
       ctx.body = {
         error: "Email not found"
       }
-      return;
     }
-
-
-    if (ctx.request.body.name == user.name) {
+    else if (ctx.request.body.name == user.name) {
       ctx.body = {
         token: jsonwebtoken.sign({
           data: user
@@ -45,9 +46,14 @@ async function login(ctx, next){
       ctx.body = {
         error: "Authentication failed"
       }
-      return;
     }
-  });
+  }
+  catch(err){
+    ctx.status = 401;
+    ctx.body = {
+      error: "Authentication failed"
+    }
+  }
 
 
 };

@@ -36,6 +36,7 @@ app.use(jwt({
 }));
 
 
+
 // sequelize & squel
 app.use(db);
 
