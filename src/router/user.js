@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 import jwt from 'koa-jwt';
 import key from '../config/key.json';
+import { is } from '../../utils/utils';
 
 const router = new Router();
 
@@ -51,8 +52,6 @@ var getErrMsg = function(v){
 
 var validateData = function(body, type){
 
-  let patt = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
   let validData = {
     name: false,
     email: false,
@@ -60,8 +59,10 @@ var validateData = function(body, type){
   };
 
 
-  validData.email = patt.test(body.email);
-  validData.name = !body.name.length < 1;
+  const fnName = (name = is.required) => name.length > 1;
+
+  validData.email = is.vEmail(body.email);
+  validData.name = fnName(body.name);
 
   if(type == 1){
     if( typeof body.birthday !== 'undefined'){
