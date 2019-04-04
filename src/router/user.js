@@ -1,7 +1,9 @@
 import Router from 'koa-router';
 import jwt from 'koa-jwt';
 import key from '../config/key.json';
-import { is, userAuth } from '../../utils/utils';
+import { is } from '../../utils/utils';
+import { userAuth } from '../middleware/userAuth';
+
 
 const router = new Router();
 
